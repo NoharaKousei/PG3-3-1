@@ -25,6 +25,7 @@ public:
 		scene = sceneNo;
 	}
 
+
 };
 
 const char SceneChange::SCENE_NAME[4][10] =
