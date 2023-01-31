@@ -1,69 +1,29 @@
-#include <stdio.h>
-
-class SceneChange
-{
-private:
-	static const char SCENE_NAME[4][10];
-
-	int scene = 0;
-
-	SceneChange() = default;
-
-	~SceneChange() = default;
-public:
-	static SceneChange* GetInstance();
-	//コピーコンストラクタを無効にする
-	SceneChange(const SceneChange& obj) = delete;
-	//代入演算子を無効化する
-	SceneChange& operator=(const SceneChange& obj) = delete;
-
-	void PrintScene() {
-		printf("sceneNo:%d\nsceneName:%s\n\n", scene, SCENE_NAME[scene]);
-	}
-
-	void ChangeScene(int sceneNo) {
-		scene = sceneNo;
-	}
-
-
-};
-
-const char SceneChange::SCENE_NAME[4][10] =
-{
-	"Title",
-	"NewGame",
-	"GamePlay",
-	"GameClear",
-};
+#include "Enemy.h"
+　
+bool Enemy::isAlive_ = true;
 
 int main()
 {
-	SceneChange* sceneManager = SceneChange::GetInstance();
-	while (true)
+	std::array<Enemy, 5> enemy{};
+	// 敵状態を表示
+	for (int i = 0; i < enemy.size(); i++)
 	{
-		sceneManager->PrintScene();
+		printf("\n敵%d:", i);
 
-	input:
-		int putNum = 0;
-
-		printf("0~3を押してシーンチェンジ\n");
-
-		scanf_s("%d", &putNum);
-
-		switch (putNum)
-		{
-		case 0:	case 1:	case 2:	case 3:
-
-			sceneManager->ChangeScene(putNum);
-			break;
-
-		}
+		enemy[i].Print();
 	}
-}
 
-SceneChange* SceneChange::GetInstance()
-{
-	static SceneChange sceneManager;
+	enemy[4].SetAlive(false);
 
-	return &sceneManager;
+	printf("\n敵4を倒しました\n");
+
+	// 敵状態を再表示
+	for (int i = 0; i < enemy.size(); i++)
+	{
+		printf("\n敵%d:", i);
+
+		enemy[i].Print();
+	}
+
+	return 0;
 }
